@@ -38,7 +38,8 @@ export async function POST(request: Request) {
 
   const { error } = await resend.emails.send({
     from: "Resolve Contact Form <onboarding@resend.dev>",
-    to: ["azril.a@hotmail.com"],
+    to: ["ncxmzgn5t5@privaterelay.appleid.com"],
+    replyTo: body.email.trim(),
     subject: `New enquiry from ${body.name.trim()}`,
     html: `
       <p><strong>Name:</strong> ${body.name.trim()}</p>
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
 
   if (error) {
     return NextResponse.json(
-      { message: `Resend error: ${error.name} — ${error.message}` },
+      { message: "Unable to send your message. Please try again." },
       { status: 500 },
     );
   }
