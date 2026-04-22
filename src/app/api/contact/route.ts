@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
   if (error) {
     return NextResponse.json(
-      { message: "Unable to send your message. Please try again." },
+      { message: `Resend error: ${error.name} — ${error.message}` },
       { status: 500 },
     );
   }
