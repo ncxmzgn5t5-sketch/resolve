@@ -1,12 +1,9 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
-type ContactRecord = {
-  id: string;
-  submittedAt: string;
+type ContactPayload = {
   name: string;
   email: string;
   company: string;
@@ -19,22 +16,17 @@ function validateEmail(email: string) {
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as Partial<ContactRecord>;
+  const body = (await request.json()) as Partial<ContactPayload>;
 
   if (!body.name?.trim()) {
-    return NextResponse.json(
-      { message: "Name is required." },
-      { status: 400 },
-    );
+    return NextResponse.json({ message: "Name is required." }, { status: 400 });
   }
-
   if (!body.email?.trim() || !validateEmail(body.email)) {
     return NextResponse.json(
       { message: "A valid email address is required." },
       { status: 400 },
     );
   }
-
   if (!body.message?.trim()) {
     return NextResponse.json(
       { message: "Message is required." },
@@ -42,35 +34,29 @@ export async function POST(request: Request) {
     );
   }
 
-  const dataDir = path.join(process.cwd(), "data");
-  const filePath = path.join(dataDir, "inquiries.json");
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
-  await mkdir(dataDir, { recursive: true });
+  const { error } = await resend.emails.send({
+    from: "Resolve Contact Form <onboarding@resend.dev>",
+    to: ["azril.a@hotmail.com"],
+    subject: `New enquiry from ${body.name.trim()}`,
+    html: `
+      <p><strong>Name:</strong> ${body.name.trim()}</p>
+      <p><strong>Email:</strong> ${body.email.trim()}</p>
+      <p><strong>Company:</strong> ${body.company?.trim() || "—"}</p>
+      <p><strong>Service Interest:</strong> ${body.serviceInterest?.trim() || "—"}</p>
+      <hr />
+      <p><strong>Message:</strong></p>
+      <p>${body.message.trim().replace(/\n/g, "<br />")}</p>
+    `,
+  });
 
-  let existingRecords: ContactRecord[] = [];
-
-  try {
-    const current = await readFile(filePath, "utf8");
-    existingRecords = JSON.parse(current) as ContactRecord[];
-  } catch {
-    existingRecords = [];
+  if (error) {
+    return NextResponse.json(
+      { message: "Unable to send your message. Please try again." },
+      { status: 500 },
+    );
   }
 
-  const nextRecord: ContactRecord = {
-    id: crypto.randomUUID(),
-    submittedAt: new Date().toISOString(),
-    name: body.name.trim(),
-    email: body.email.trim(),
-    company: body.company?.trim() ?? "",
-    serviceInterest: body.serviceInterest?.trim() ?? "",
-    message: body.message.trim(),
-  };
-
-  existingRecords.push(nextRecord);
-
-  await writeFile(filePath, JSON.stringify(existingRecords, null, 2));
-
-  return NextResponse.json({
-    message: "Your enquiry has been received.",
-  });
+  return NextResponse.json({ message: "Your enquiry has been received." });
 }
