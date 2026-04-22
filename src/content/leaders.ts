@@ -1,7 +1,7 @@
 export const leaders = [
   {
     name: "Azril Akmal bin Abdullah",
-    title: "Partner",
+    title: "Principal",
     summary:
       "Strategy and operations professional with over 10 years of experience spanning digital transformation, target operating model development, business optimisation, and complex programme delivery.",
     fullBio:
@@ -19,9 +19,9 @@ export const leaders = [
     name: "Larry Eden Gomez",
     title: "Partner",
     summary:
-      "Strategy and operations optimisation advocate with over 18 years of experience across shared services transformations, process optimisation, business development, and programme delivery.",
+      "Strategy and operations optimisation advocate with over 20 years of experience across shared services transformations, process optimisation, business development, and programme delivery.",
     fullBio:
-      "Larry brings over 18 years of experience spanning shared services transformation, process optimisation, business development, programme and project management, and operational delivery. His background combines corporate and consulting experience, with a practical emphasis on turning business priorities into workable execution models.",
+      "Larry brings over 20 years of experience spanning shared services transformation, process optimisation, business development, programme and project management, and operational delivery. His background combines corporate and consulting experience, with a practical emphasis on turning business priorities into workable execution models.",
     specialisations: [
       "Digital transformation",
       "Strategy and operations",
@@ -30,6 +30,6 @@ export const leaders = [
       "Shared services transformation",
       "Business development",
     ],
-    industries: ["Financial services", "Government"],
+    industries: ["Financial services", "Government", "Property Development", "Manufacturing", "Construction", "Plantations"],
   },
 ];
