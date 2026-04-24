@@ -37,8 +37,8 @@ export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { error } = await resend.emails.send({
-    from: "Resolve Contact Form <onboarding@resend.dev>",
-    to: ["ncxmzgn5t5@privaterelay.appleid.com"],
+    from: "Resolve Advisory <contact@resolveadvisory.com.my>",
+    to: ["azril@resolveadvisory.com.my"],
     replyTo: body.email.trim(),
     subject: `New enquiry from ${body.name.trim()}`,
     html: `
