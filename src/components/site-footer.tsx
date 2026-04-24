@@ -6,13 +6,13 @@ export function SiteFooter() {
     <footer className="border-t border-[var(--border-soft)] bg-[rgba(255,255,255,0.62)]">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 py-8 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <div className="flex items-center gap-4">
-          <div className="relative h-11 w-11 overflow-hidden bg-transparent">
+          <div className="relative h-14 w-14 overflow-hidden bg-transparent">
             <Image
               src="/resolve-mark.png"
               alt="Resolve Advisory & Services logo"
               fill
-              className="object-contain p-1"
-              sizes="44px"
+              className="object-contain"
+              sizes="56px"
             />
           </div>
           <div>
