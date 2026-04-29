@@ -204,7 +204,7 @@ export default function Home() {
           <p className="eyebrow">Leaders</p>
           <h2 className="section-title mt-4 max-w-xl">Experienced, hands-on leadership.</h2>
         </div>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {leaders.map((member) => (
             <article
               key={member.name}
